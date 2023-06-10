@@ -1,0 +1,61 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Token {
+  address: String!
+  name: String
+  symbol: String
+  decimals: Float
+  logoUrl: String!
+  nativeToken: Boolean!
+  type: String!
+  erc: String
+  balance: String!
+  balance24hAgo: String
+  quote: Float
+  prettyQuote: String
+  quoteRate: Float
+  quoteRate24hAgo: Float
+}
+
+type Attribute {
+  trait_type: String!
+  value: String!
+}
+
+type Nft {
+  address: String!
+  name: String
+  symbol: String
+  decimals: Float
+  logoUrl: String!
+  nativeToken: Boolean!
+  type: String!
+  erc: String
+  balance: String!
+  balance24hAgo: String
+  quote: Float
+  prettyQuote: String
+  quoteRate: Float
+  quoteRate24hAgo: Float
+  tokenId: String!
+  tokenBalance: String
+  nftName: String
+  description: String
+  image: String
+  animationUrl: String
+  attributes: [Attribute]
+}
+
+type Balance {
+  chainId: Int!
+  quoteCurrency: String!
+  tokens: [Token]!
+  nfts: [Nft]!
+}
+
+type Query {
+  findEvmBalance(address: String!, chainId: Int!): Balance!
+  findEvmBalanceWithNft(address: String!, chainId: Int!): Balance!
+}
