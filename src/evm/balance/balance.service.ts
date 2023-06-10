@@ -58,7 +58,7 @@ export class BalanceService {
       if (item.balance === '0') {
         continue;
       } else if (item.type === 'nft') {
-        balance.nfts.push(this.covalentNftItemToNft(item));
+        balance.nfts.push(...this.covalentNftItemToNft(item));
       } else {
         balance.tokens.push(this.covalentItemToToken(item));
       }
@@ -104,18 +104,23 @@ export class BalanceService {
 
   covalentNftItemToNft(item: CovalentItem) {
     const token = this.covalentItemToToken(item);
-    const nftData = item.nft_data[0];
-    const externalData = nftData.external_data;
-    const nft: Nft = {
-      ...token,
-      tokenId: nftData.token_id,
-      tokenBalance: nftData.token_balance,
-      nftName: externalData ? externalData.name : undefined,
-      description: externalData ? externalData.description : undefined,
-      image: externalData ? externalData.image : undefined,
-      animationUrl: externalData ? externalData.animation_url : undefined,
-      attributes: externalData ? externalData.attributes : undefined,
-    };
-    return nft;
+    const nfts: Nft[] = [];
+
+    for (let index = 0; index < +item.balance; index++) {
+      const nftData = item.nft_data[index];
+      const externalData = nftData.external_data;
+      const nft = {
+        ...token,
+        tokenId: nftData.token_id,
+        tokenBalance: nftData.token_balance,
+        nftName: externalData ? externalData.name : undefined,
+        description: externalData ? externalData.description : undefined,
+        image: externalData ? externalData.image : undefined,
+        animationUrl: externalData ? externalData.animation_url : undefined,
+        attributes: externalData ? externalData.attributes : undefined,
+      };
+      nfts.push(nft);
+    }
+    return nfts;
   }
 }
