@@ -28,22 +28,19 @@ export class CovalentUtils {
   }
 }
 
-export interface CovalentData {
+export interface CovalentBalancesResponse {
   address: string;
   updated_at: Date;
-  next_update_at: Date;
-  quote_currency: string;
   chain_id: number;
   chain_name: string;
-  items: CovalentItem[];
+  items: CovalentTokenItem[];
 }
 
-export interface CovalentItem {
-  contract_decimals?: number;
-  contract_name?: string;
-  contract_ticker_symbol?: string;
+export interface CovalentTokenItem {
+  contract_decimals: number;
+  contract_name: string;
+  contract_ticker_symbol: string;
   contract_address: string;
-  supports_erc: string[];
   logo_url: string;
   last_transferred_at?: Date;
   native_token: boolean;
@@ -56,13 +53,30 @@ export interface CovalentItem {
   pretty_quote?: string;
   quote_24h: number;
   pretty_quote_24h?: string;
-  nft_data?: NftData[];
+  // nft_data?: NftData[];
   is_spam?: boolean;
+}
+
+export interface CovalentNftBalanceResponse {
+  address: string;
+  updated_at: Date;
+  items: CovalentNftItem[];
+}
+
+export interface CovalentNftItem {
+  contract_name?: string;
+  contract_ticker_symbol?: string;
+  contract_address: string;
+  supports_erc: string[];
+  is_spam: boolean;
+  balance: number;
+  balance24h: number;
+  type: string;
+  nft_data: NftData[];
 }
 
 interface NftData {
   token_id: string;
-  token_balance?: string;
   token_url?: string;
   original_owner?: string;
   external_data?: ExternalData;
@@ -70,12 +84,12 @@ interface NftData {
 
 interface ExternalData {
   name?: string;
-  description: string;
-  image: string;
+  description?: string;
+  image?: string;
   image_256?: string;
   image_512?: string;
   image_1024?: string;
-  animation_url: string;
+  animation_url?: string;
   external_url?: string;
   attributes: Attribute[];
 }
