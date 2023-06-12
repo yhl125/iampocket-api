@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { BalanceService } from './balance.service';
-import { BalanceResolver } from './balance.resolver';
+import { BalanceService } from './token.service';
+import { TokenResolver } from './token.resolver';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [HttpModule],
-  providers: [BalanceResolver, BalanceService],
+  providers: [TokenResolver, BalanceService],
 })
 export class BalanceModule {}

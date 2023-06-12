@@ -4,15 +4,14 @@
 
 type Token {
   address: String!
-  name: String
-  symbol: String
-  decimals: Float
+  name: String!
+  symbol: String!
+  decimals: Float!
   logoUrl: String!
   nativeToken: Boolean!
   type: String!
-  erc: String
   balance: String!
-  balance24hAgo: String
+  balance24hAgo: String!
   quote: Float
   prettyQuote: String
   quoteRate: Float
@@ -28,19 +27,9 @@ type Nft {
   address: String!
   name: String
   symbol: String
-  decimals: Float
-  logoUrl: String!
-  nativeToken: Boolean!
-  type: String!
-  erc: String
-  balance: String!
-  balance24hAgo: String
-  quote: Float
-  prettyQuote: String
-  quoteRate: Float
-  quoteRate24hAgo: Float
+  balance: Int!
+  supportsErc: [String!]!
   tokenId: String!
-  tokenBalance: String
   nftName: String
   description: String
   image: String
@@ -48,14 +37,26 @@ type Nft {
   attributes: [Attribute]
 }
 
-type Balance {
-  chainId: Int!
-  quoteCurrency: String!
-  tokens: [Token]!
-  nfts: [Nft]!
+type Query {
+  findEvmTokenBalance(address: String!, chainId: Int!, quoteCurrency: QuoteCurrency!): [Token!]!
+  findEvmNftBalance(address: String!, chainId: Int!): [Nft!]!
 }
 
-type Query {
-  findEvmBalance(address: String!, chainId: Int!): Balance!
-  findEvmBalanceWithNft(address: String!, chainId: Int!): Balance!
+enum QuoteCurrency {
+  USD
+  CAD
+  EUR
+  SGD
+  INR
+  JPY
+  VND
+  CNY
+  KRW
+  RUB
+  TRY
+  NGN
+  ARS
+  AUD
+  CHF
+  GBP
 }
