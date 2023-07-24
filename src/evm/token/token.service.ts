@@ -21,12 +21,14 @@ export class BalanceService {
     chainId: number,
     quoteCurrency: QuoteCurrency,
   ) {
+    if (!address) {
+      return [];
+    }
     const chainName = CovalentUtils.chainNameFrom(chainId);
 
     const url = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_v2/?quote-currency=${
       QuoteCurrency[quoteCurrency]
     }&no-spam=true&key=${this.configService.get<string>('COVALENT_API_KET')}`;
-    // console.log((await lastValueFrom(this.httpService.get(url))).data.data);
     const data = (await lastValueFrom(this.httpService.get(url))).data.data;
     return this.covalentDataToTokens(data);
   }
