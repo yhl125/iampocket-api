@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MercuriusDriver, MercuriusDriverConfig } from '@nestjs/mercurius';
-import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { EvmModule } from './evm/evm.module';
 
@@ -11,7 +10,11 @@ import { EvmModule } from './evm/evm.module';
     GraphQLModule.forRoot<MercuriusDriverConfig>({
       driver: MercuriusDriver,
       graphiql: true,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      // for schema.gql file generation
+      // autoSchemaFile: 'src/schema.gql',
+
+      // for deploying to vercel
+      autoSchemaFile: true,
     }),
     EvmModule,
   ],
