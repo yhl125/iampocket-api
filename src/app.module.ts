@@ -10,11 +10,7 @@ import { EvmModule } from './evm/evm.module';
     GraphQLModule.forRoot<MercuriusDriverConfig>({
       driver: MercuriusDriver,
       graphiql: true,
-      // for schema.gql file generation
-      // autoSchemaFile: 'src/schema.gql',
-
-      // for deploying to vercel
-      autoSchemaFile: true,
+      autoSchemaFile: 'src/schema.gql',
     }),
     EvmModule,
   ],
