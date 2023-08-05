@@ -1,0 +1,9 @@
+services:
+  api:
+    container_name: iampocket-api
+    image: iampocket-api
+    build: .
+    ports:
+      - "8080:8000"
+    env_file:
+      - .env
