@@ -56,4 +56,5 @@ jobs:
             docker rmi -f $(docker images -aq)
             sudo docker system prune -a -f
             docker pull ${{ steps.build-image.outputs.image }}
-            docker run --env-file ${{ secrets.ENV }} -d -p 8000:8000 ${{ steps.build-image.outputs.image }} 
+            echo ${{ secrets.ENV }} >> .env
+            docker run --env-file .env -d -p 8000:8000 ${{ steps.build-image.outputs.image }} 
