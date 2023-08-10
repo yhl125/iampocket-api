@@ -20,9 +20,18 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@mercuriusjs/gateway": "^1.2.0",
+    "@nestjs/axios": "^2.0.0",
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.3.2",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/graphql": "^11.0.6",
+    "@nestjs/mercurius": "^11.0.6",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/platform-fastify": "^9.4.2",
+    "axios": "^1.4.0",
+    "graphql": "^16.6.0",
+    "mercurius": "^12.2.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
@@ -36,6 +45,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "check-peer-dependencies": "^4.2.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
