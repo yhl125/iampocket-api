@@ -11,7 +11,11 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
   app.enableCors({
-    origin: ['http://localhost:3000', 'https://iampocket-wallet.vercel.app'],
+    origin: [
+      'http://localhost:3000',
+      'https://iampocket-wallet.vercel.app',
+      'https://iampocket-wallet-git-develop-yhl125.vercel.app',
+    ],
     methods: ['POST'],
     credentials: true,
   });
