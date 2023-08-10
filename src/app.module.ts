@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MercuriusDriver, MercuriusDriverConfig } from '@nestjs/mercurius';
 import { ConfigModule } from '@nestjs/config';
 import { EvmModule } from './evm/evm.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -14,5 +15,6 @@ import { EvmModule } from './evm/evm.module';
     }),
     EvmModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
