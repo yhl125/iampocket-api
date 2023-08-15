@@ -19,8 +19,8 @@ export class Token {
   type: string;
   @Field()
   balance: string;
-  @Field()
-  balance24hAgo: string;
+  @Field({ nullable: true })
+  balance24hAgo?: string;
   @Field({ nullable: true })
   quote?: number;
   @Field({ nullable: true })

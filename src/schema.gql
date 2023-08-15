@@ -11,7 +11,7 @@ type Token {
   nativeToken: Boolean!
   type: String!
   balance: String!
-  balance24hAgo: String!
+  balance24hAgo: String
   quote: Float
   prettyQuote: String
   quoteRate: Float
