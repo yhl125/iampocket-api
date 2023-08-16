@@ -22,6 +22,10 @@ export class CovalentUtils {
         return 'optimism-mainnet';
       case 420:
         return 'optimism-goerli';
+      case 8453:
+        return 'base-mainnet';
+      case 84531:
+        return 'base-testnet';
       default:
         return 'eth-mainnet';
     }
