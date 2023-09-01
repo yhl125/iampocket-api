@@ -37,9 +37,23 @@ type Nft {
   attributes: [Attribute]
 }
 
+type TransactionData {
+  from: String!
+  to: String!
+  data: String!
+  value: String!
+  gasPrice: String!
+}
+
+type ValhaIneractionData {
+  approveTx: [TransactionData!]!
+  interactionTx: TransactionData!
+}
+
 type Query {
   findEvmTokenBalance(address: String!, chainId: Int!, quoteCurrency: QuoteCurrency!): [Token!]!
   findEvmNftBalance(address: String!, chainId: Int!): [Nft!]!
+  valhaZapTransaction(valhaZapInput: ValhaZapInput!): ValhaIneractionData!
 }
 
 enum QuoteCurrency {
@@ -59,4 +73,16 @@ enum QuoteCurrency {
   AUD
   CHF
   GBP
+}
+
+input ValhaZapInput {
+  chainId: Int!
+  walletAddress: String!
+  poolAddress: String!
+  action: String!
+  inputAmount: Float!
+  disableCheck: Boolean!
+  useValhaRouter: Boolean!
+  swapProvider: String!
+  swapToken: String!
 }
