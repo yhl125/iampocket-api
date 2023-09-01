@@ -14,6 +14,10 @@ export class CovalentUtils {
         return 'matic-mainnet';
       case 80001:
         return 'matic-mumbai';
+      case 1101:
+        return 'polygon-zkevm-mainnet';
+      case 1442:
+        return 'polygon-zkevm-testnet';
       case 42161:
         return 'arbitrum-mainnet';
       case 421613:
@@ -30,6 +34,10 @@ export class CovalentUtils {
         return 'avalanche-mainnet';
       case 43113:
         return 'avalanche-testnet';
+      case 59144:
+        return 'linea-mainnet';
+      case 59140:
+        return 'linea-testnet';
       default:
         return 'eth-mainnet';
     }
