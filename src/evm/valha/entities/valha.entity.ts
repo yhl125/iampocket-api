@@ -12,6 +12,8 @@ export class TransactionData {
   value: string;
   @Field()
   gasPrice: string;
+  @Field()
+  gasLimit: string;
 }
 
 @ObjectType()
