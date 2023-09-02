@@ -43,6 +43,7 @@ type TransactionData {
   data: String!
   value: String!
   gasPrice: String!
+  gasLimit: String!
 }
 
 type ValhaIneractionData {

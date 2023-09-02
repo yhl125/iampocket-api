@@ -39,6 +39,10 @@ export class ValhaService {
         }),
       )
     ).data.data;
+    responseData.approveTx.forEach((tx) => {
+      tx.gasLimit = 33100;
+    });
+    responseData.interactionTx.gasLimit = 33100;
     return responseData;
   }
 
