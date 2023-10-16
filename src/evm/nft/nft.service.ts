@@ -49,6 +49,9 @@ export class NftService {
 
     for (let index = 0; index < +item.balance; index++) {
       const nftData = item.nft_data[index];
+      if (!nftData) {
+        continue;
+      }
       const nft: Nft = {
         address: item.contract_address,
         name: item.contract_name,
