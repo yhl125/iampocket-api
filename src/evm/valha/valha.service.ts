@@ -42,7 +42,6 @@ export class ValhaService {
     responseData.approveTx.forEach((tx) => {
       tx.gasLimit = 33100;
     });
-    responseData.interactionTx.gasLimit = 4500000;
     return responseData;
   }
 
