@@ -32,7 +32,16 @@ export class BalanceService {
     const data = (await lastValueFrom(this.httpService.get(url))).data.data;
     return this.covalentDataToTokens(data);
   }
-
+  async findTokensByChainIds(
+    address: string,
+    chainIds: number[],
+    quoteCurrency: QuoteCurrency,
+  ) {
+    const tokenList = chainIds.map((chainId) => {
+      return this.findTokens(address, chainId, quoteCurrency);
+    });
+    return (await Promise.all(tokenList)).flat();
+  }
   covalentDataToTokens(data: CovalentBalancesResponse) {
     const tokens: Token[] = [];
 
@@ -40,15 +49,15 @@ export class BalanceService {
       if (item.balance === '0') {
         continue;
       } else {
-        tokens.push(this.covalentItemToToken(item));
+        tokens.push(this.covalentItemToToken(item, data.chain_id));
       }
     }
-
     return tokens;
   }
 
-  covalentItemToToken(item: CovalentTokenItem) {
+  covalentItemToToken(item: CovalentTokenItem, chainId: number) {
     const token: Token = {
+      chainId: chainId,
       address: item.contract_address,
       name: item.contract_name,
       symbol: item.contract_ticker_symbol,
