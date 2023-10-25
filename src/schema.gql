@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 type Token {
+  chainId: Float!
   address: String!
   name: String!
   symbol: String!
@@ -52,7 +53,7 @@ type ValhaIneractionData {
 }
 
 type Query {
-  findEvmTokenBalance(address: String!, chainId: Int!, quoteCurrency: QuoteCurrency!): [Token!]!
+  findEvmTokenBalance(address: String!, chainIds: [Int!]!, quoteCurrency: QuoteCurrency!): [Token!]!
   findEvmNftBalance(address: String!, chainId: Int!): [Nft!]!
   valhaZapTransaction(valhaZapInput: ValhaZapInput!): ValhaIneractionData!
 }

@@ -3,6 +3,8 @@ import { ObjectType, Field, registerEnumType } from '@nestjs/graphql';
 @ObjectType()
 export class Token {
   @Field()
+  chainId: number;
+  @Field()
   address: string;
   @Field()
   name: string;

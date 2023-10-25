@@ -7,10 +7,14 @@ export class TokenResolver {
   @Query(() => [Token], { name: 'findEvmTokenBalance' })
   findBy(
     @Args('address') address: string,
-    @Args('chainId', { type: () => Int }) chainId: number,
+    @Args('chainIds', { type: () => [Int] }) chainIds: number[],
     @Args('quoteCurrency', { type: () => QuoteCurrency })
     quoteCurrency: QuoteCurrency,
   ) {
-    return this.balanceService.findTokens(address, chainId, quoteCurrency);
+    return this.balanceService.findTokensByChainIds(
+      address,
+      chainIds,
+      quoteCurrency,
+    );
   }
 }
