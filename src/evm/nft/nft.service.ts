@@ -1,7 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AxiosHeaders } from 'axios';
 import { lastValueFrom } from 'rxjs';
 import {
   CovalentNftBalanceResponse,
@@ -20,31 +19,29 @@ export class NftService {
     const chainName = CovalentUtils.chainNameFrom(chainId);
 
     const url = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_nft/?no-spam=true&key=${this.configService.get<string>(
-      'COVALENT_API_KET',
+      'COVALENT_API_KEY',
     )}`;
-    const headers = new AxiosHeaders();
-    headers.setAuthorization(
-      'Basic ' +
-        Buffer.from(
-          this.configService.get<string>('COVALENT_API_KET'),
-        ).toString('base64'),
-    );
 
     const data = (await lastValueFrom(this.httpService.get(url))).data.data;
-    return this.covalentDataToNfts(data);
+    return this.covalentDataToNfts(data, chainId);
   }
-
-  covalentDataToNfts(data: CovalentNftBalanceResponse) {
+  async findNftsByChainIds(address: string, chainIds: number[]) {
+    const nftList = chainIds.map((chainId) => {
+      return this.findNfts(address, chainId);
+    });
+    return (await Promise.all(nftList)).flat();
+  }
+  covalentDataToNfts(data: CovalentNftBalanceResponse, chainId: number) {
     const nfts: Nft[] = [];
 
     for (const item of data.items) {
-      nfts.push(...this.covalentItemToNfts(item));
+      nfts.push(...this.covalentItemToNfts(item, chainId));
     }
 
     return nfts;
   }
 
-  covalentItemToNfts(item: CovalentNftItem) {
+  covalentItemToNfts(item: CovalentNftItem, chainId: number) {
     const nfts: Nft[] = [];
 
     for (let index = 0; index < +item.balance; index++) {
@@ -53,6 +50,7 @@ export class NftService {
         continue;
       }
       const nft: Nft = {
+        chainId: chainId,
         address: item.contract_address,
         name: item.contract_name,
         symbol: item.contract_ticker_symbol,

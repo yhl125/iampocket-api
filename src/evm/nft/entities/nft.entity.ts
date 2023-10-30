@@ -11,6 +11,8 @@ class Attribute {
 @ObjectType()
 export class Nft {
   @Field()
+  chainId: number;
+  @Field()
   address: string;
   @Field({ nullable: true })
   name?: string;
