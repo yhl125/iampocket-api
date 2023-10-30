@@ -9,8 +9,8 @@ export class NftResolver {
   @Query(() => [Nft], { name: 'findEvmNftBalance' })
   findWithNftFetch(
     @Args('address') address: string,
-    @Args('chainId', { type: () => Int }) chainId: number,
+    @Args('chainIds', { type: () => [Int] }) chainIds: number[],
   ) {
-    return this.nftService.findNfts(address, chainId);
+    return this.nftService.findNftsByChainIds(address, chainIds);
   }
 }

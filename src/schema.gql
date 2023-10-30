@@ -25,6 +25,7 @@ type Attribute {
 }
 
 type Nft {
+  chainId: Float!
   address: String!
   name: String
   symbol: String
@@ -54,7 +55,7 @@ type ValhaIneractionData {
 
 type Query {
   findEvmTokenBalance(address: String!, chainIds: [Int!]!, quoteCurrency: QuoteCurrency!): [Token!]!
-  findEvmNftBalance(address: String!, chainId: Int!): [Nft!]!
+  findEvmNftBalance(address: String!, chainIds: [Int!]!): [Nft!]!
   valhaZapTransaction(valhaZapInput: ValhaZapInput!): ValhaIneractionData!
 }
 
