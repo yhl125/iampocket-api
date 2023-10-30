@@ -28,7 +28,7 @@ export class BalanceService {
 
     const url = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_v2/?quote-currency=${
       QuoteCurrency[quoteCurrency]
-    }&no-spam=true&key=${this.configService.get<string>('COVALENT_API_KET')}`;
+    }&no-spam=true&key=${this.configService.get<string>('COVALENT_API_KEY')}`;
     const data = (await lastValueFrom(this.httpService.get(url))).data.data;
     return this.covalentDataToTokens(data);
   }

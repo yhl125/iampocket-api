@@ -20,7 +20,7 @@ export class NftService {
     const chainName = CovalentUtils.chainNameFrom(chainId);
 
     const url = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_nft/?no-spam=true&key=${this.configService.get<string>(
-      'COVALENT_API_KET',
+      'COVALENT_API_KEY',
     )}`;
     const headers = new AxiosHeaders();
     headers.setAuthorization(
