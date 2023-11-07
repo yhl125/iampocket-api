@@ -53,10 +53,39 @@ type ValhaIneractionData {
   interactionTx: TransactionData!
 }
 
+type Quote {
+  chainid: Int!
+  price: String!
+  guaranteedPrice: String!
+  to: String!
+  data: String!
+  value: String!
+  expectedSlippage: String
+  buyTokenAddress: String!
+  buyAmount: String!
+  sellTokenAddress: String!
+  sellAmount: String!
+  AllownaceTarget: String!
+}
+
+type Price {
+  chainid: Int!
+  price: String!
+  value: String!
+  buyTokenAddress: String!
+  buyAmount: String!
+  sellTokenAddress: String!
+  sellAmount: String!
+  gas: String!
+  AllownaceTarget: String!
+}
+
 type Query {
   findEvmTokenBalance(address: String!, chainIds: [Int!]!, quoteCurrency: QuoteCurrency!): [Token!]!
   findEvmNftBalance(address: String!, chainIds: [Int!]!): [Nft!]!
   valhaZapTransaction(valhaZapInput: ValhaZapInput!): ValhaIneractionData!
+  findSwapQuote(chainId: Int!, sellToken: String!, buyToken: String!, sellAmount: String, buyAmount: String, slippagePercentage: String, takerAddress: String): Quote!
+  findSwapPrice(chainId: Int!, sellToken: String!, buyToken: String!, sellAmount: String, buyAmount: String, takerAddress: String): Price!
 }
 
 enum QuoteCurrency {
