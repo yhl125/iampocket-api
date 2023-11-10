@@ -23,6 +23,8 @@ export class SwapUtils {
         return 'https://polygon.api.0x.org/';
       case 80001:
         return 'https://mumbai.api.0x.org';
+      default:
+        throw new Error('Chain ID not Found');
     }
   }
   static findSwapPriceApiQuery(
@@ -40,6 +42,8 @@ export class SwapUtils {
       return `swap/v1/price?sellToken=${sellToken}&buyToken=${buyToken}&sellAmount=${sellAmount}`;
     } else if (!takerAddress && buyAmount) {
       return `swap/v1/price?sellToken=${sellToken}&buyToken=${buyToken}&buyAmount=${buyAmount}`;
+    } else {
+      throw new Error('Price Query not found');
     }
   }
   static findSwapQuoteApiQuery(
@@ -66,6 +70,8 @@ export class SwapUtils {
       return `swap/v1/quote?sellToken=${sellToken}&buyToken=${buyToken}&buyAmount=${buyAmount}${
         slippagePercentage ? '&slippagePercentage=' + slippagePercentage : ''
       }`;
+    } else {
+      throw new Error('Price Query not found');
     }
   }
   static findExchangeProxyAddress(chainId: number) {
@@ -110,7 +116,6 @@ export interface PriceResponse {
   buyAmount: string;
   sellTokenAddress: string;
   sellAmount: string;
-  sources: any[];
   allowanceTarget: string;
   sellTokenToEthRate: string;
   buyTokenToEthRate: string;
@@ -136,11 +141,29 @@ export interface QuoteResponse {
   sellTokenAddress: string;
   buyAmount: string;
   sellAmount: string;
-  sources: any[];
-  orders: any[];
+  sources: Source[];
+  orders: Order[];
   allowanceTarget: string;
   decodedUniqueId: string;
   sellTokenToEthRate: string;
   buyTokenToEthRate: string;
   expectedSlippage: string | null;
+}
+interface Source {
+  name: string;
+  proportion: string;
+}
+
+interface Order {
+  makerToken: string;
+  takerToken: string;
+  makerAmount: string;
+  takerAmount: string;
+  fillData: {
+    tokenAddressPath: string[];
+    router: string;
+  };
+  source: string;
+  sourcePathId: string;
+  type: number;
 }
