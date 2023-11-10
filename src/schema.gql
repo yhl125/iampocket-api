@@ -53,6 +53,27 @@ type ValhaIneractionData {
   interactionTx: TransactionData!
 }
 
+type Source {
+  name: String!
+  proportion: String!
+}
+
+type FillData {
+  tokenAddressPath: [String!]!
+  router: String!
+}
+
+type Order {
+  makerToken: String!
+  takerToken: String!
+  makerAmount: String!
+  takerAmount: String!
+  fillData: FillData!
+  source: String!
+  sourcePathId: String!
+  type: Int!
+}
+
 type Quote {
   chainid: Int!
   price: String!
@@ -65,6 +86,8 @@ type Quote {
   buyAmount: String!
   sellTokenAddress: String!
   sellAmount: String!
+  sources: [Source!]!
+  orders: [Order!]!
   AllownaceTarget: String!
 }
 

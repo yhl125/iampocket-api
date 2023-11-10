@@ -111,7 +111,6 @@ export class SwapService {
         }),
       )
     ).data;
-    console.log(data);
     return this.quoteResponseToQuoteData(data);
   }
   priceResponseToPriceData(priceResponse: PriceResponse) {
@@ -142,6 +141,8 @@ export class SwapService {
       sellTokenAddress: quoteResponse.sellTokenAddress,
       sellAmount: quoteResponse.sellAmount,
       AllownaceTarget: quoteResponse.allowanceTarget,
+      sources: [...quoteResponse.sources],
+      orders: [...quoteResponse.orders],
     };
     return quote;
   }

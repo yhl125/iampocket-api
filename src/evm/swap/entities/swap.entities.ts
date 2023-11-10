@@ -1,5 +1,44 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 @ObjectType()
+class Source {
+  @Field()
+  name: string;
+  @Field()
+  proportion: string;
+}
+@ObjectType()
+class FillData {
+  @Field(() => [String])
+  tokenAddressPath: string[];
+  @Field()
+  router: string;
+}
+@ObjectType()
+class Order {
+  @Field()
+  makerToken: string;
+  @Field()
+  takerToken: string;
+  @Field()
+  makerAmount: string;
+  @Field()
+  takerAmount: string;
+  @Field(() => FillData)
+  fillData: FillData;
+  @Field()
+  source: string;
+  @Field()
+  sourcePathId: string;
+  /**
+   * Bridge = 0, Limit = 1, Rfq = 2, Otc = 3.
+   * Bridge type means the order is executed on a DEX (aka AMMs).
+   * Limit corresponds to LimitOrder. Rfq corresponds to RfqOrder.
+   * Otc corresponds to OtcOrder. The "Rfq" type is deprecated.
+   */
+  @Field(() => Int)
+  type: number;
+}
+@ObjectType()
 export class Quote {
   @Field(() => Int)
   chainid: number;
@@ -23,6 +62,10 @@ export class Quote {
   sellTokenAddress: string;
   @Field(() => String)
   sellAmount: string;
+  @Field(() => [Source])
+  sources: Source[];
+  @Field(() => [Order])
+  orders: Order[];
   @Field()
   AllownaceTarget: string;
 }
