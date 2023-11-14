@@ -22,7 +22,7 @@ export class SwapUtils {
       case 137:
         return 'https://polygon.api.0x.org/';
       case 80001:
-        return 'https://mumbai.api.0x.org';
+        return 'https://mumbai.api.0x.org/';
       default:
         throw new Error('Chain ID not Found');
     }
