@@ -1,11 +1,11 @@
 import { Args, Int, Resolver, Query } from '@nestjs/graphql';
 import { SwapService } from './swap.service';
-import { Price, Quote } from './entities/swap.entities';
+import { SwapPrice, SwapQuote } from './entities/swap.entities';
 
 @Resolver()
 export class SwapResolver {
   constructor(private readonly swapService: SwapService) {}
-  @Query(() => Quote, {
+  @Query(() => SwapQuote, {
     name: 'findSwapQuote',
   })
   findBy(
@@ -28,7 +28,7 @@ export class SwapResolver {
       takerAddress,
     );
   }
-  @Query(() => Price, {
+  @Query(() => SwapPrice, {
     name: 'findSwapPrice',
   })
   findPriceBy(

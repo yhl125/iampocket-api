@@ -39,7 +39,7 @@ class Order {
   type: number;
 }
 @ObjectType()
-export class Quote {
+export class SwapQuote {
   @Field(() => Int)
   chainid: number;
   @Field()
@@ -71,7 +71,7 @@ export class Quote {
 }
 
 @ObjectType()
-export class Price {
+export class SwapPrice {
   @Field(() => Int)
   chainid: number;
   @Field()

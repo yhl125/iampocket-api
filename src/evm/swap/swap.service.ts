@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { lastValueFrom } from 'rxjs';
 import { PriceResponse, QuoteResponse, SwapUtils } from 'src/utils/swap.utils';
-import { Price, Quote } from './entities/swap.entities';
+import { SwapPrice, SwapQuote } from './entities/swap.entities';
 
 @Injectable()
 export class SwapService {
@@ -114,7 +114,7 @@ export class SwapService {
     return this.quoteResponseToQuoteData(data);
   }
   priceResponseToPriceData(priceResponse: PriceResponse) {
-    const price: Price = {
+    const price: SwapPrice = {
       chainid: priceResponse.chainId,
       price: priceResponse.price,
       value: priceResponse.value,
@@ -128,7 +128,7 @@ export class SwapService {
     return price;
   }
   quoteResponseToQuoteData(quoteResponse: QuoteResponse) {
-    const quote: Quote = {
+    const quote: SwapQuote = {
       chainid: quoteResponse.chainId,
       price: quoteResponse.price,
       guaranteedPrice: quoteResponse.guaranteedPrice,
