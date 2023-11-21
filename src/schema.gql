@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 type Token {
+  chainId: Float!
   address: String!
   name: String!
   symbol: String!
@@ -24,6 +25,7 @@ type Attribute {
 }
 
 type Nft {
+  chainId: Float!
   address: String!
   name: String
   symbol: String
@@ -51,10 +53,62 @@ type ValhaIneractionData {
   interactionTx: TransactionData!
 }
 
+type Source {
+  name: String!
+  proportion: String!
+}
+
+type FillData {
+  tokenAddressPath: [String!]!
+  router: String!
+}
+
+type Order {
+  makerToken: String!
+  takerToken: String!
+  makerAmount: String!
+  takerAmount: String!
+  fillData: FillData!
+  source: String!
+  sourcePathId: String!
+  type: Int!
+}
+
+type Quote {
+  chainid: Int!
+  price: String!
+  guaranteedPrice: String!
+  to: String!
+  data: String!
+  value: String!
+  expectedSlippage: String
+  buyTokenAddress: String!
+  buyAmount: String!
+  sellTokenAddress: String!
+  sellAmount: String!
+  sources: [Source!]!
+  orders: [Order!]!
+  AllownaceTarget: String!
+}
+
+type Price {
+  chainid: Int!
+  price: String!
+  value: String!
+  buyTokenAddress: String!
+  buyAmount: String!
+  sellTokenAddress: String!
+  sellAmount: String!
+  gas: String!
+  AllownaceTarget: String!
+}
+
 type Query {
-  findEvmTokenBalance(address: String!, chainId: Int!, quoteCurrency: QuoteCurrency!): [Token!]!
-  findEvmNftBalance(address: String!, chainId: Int!): [Nft!]!
+  findEvmTokenBalance(address: String!, chainIds: [Int!]!, quoteCurrency: QuoteCurrency!): [Token!]!
+  findEvmNftBalance(address: String!, chainIds: [Int!]!): [Nft!]!
   valhaZapTransaction(valhaZapInput: ValhaZapInput!): ValhaIneractionData!
+  findSwapQuote(chainId: Int!, sellToken: String!, buyToken: String!, sellAmount: String, buyAmount: String, slippagePercentage: String, takerAddress: String): Quote!
+  findSwapPrice(chainId: Int!, sellToken: String!, buyToken: String!, sellAmount: String, buyAmount: String, takerAddress: String): Price!
 }
 
 enum QuoteCurrency {
