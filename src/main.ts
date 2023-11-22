@@ -10,12 +10,14 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-  
+
   app.enableCors({
     origin: [
       'http://localhost:3000',
       'https://iampocket-wallet.vercel.app',
       'https://iampocket-wallet-git-develop-yhl125.vercel.app',
+      'demo-app.iampocket.com',
+      'dev-app.iampocket.com',
     ],
     methods: ['POST'],
     credentials: true,
