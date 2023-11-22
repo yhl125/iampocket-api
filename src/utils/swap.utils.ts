@@ -74,7 +74,7 @@ export class SwapUtils {
       throw new Error('Price Query not found');
     }
   }
-  static findExchangeProxyAddress(chainId: number) {
+  static findSwapExchangeProxyAddress(chainId: number) {
     switch (chainId) {
       case 1:
         return '0xdef1c0ded9bec7f1a1670819833240f027b25eff';
@@ -101,7 +101,7 @@ export class SwapUtils {
     }
   }
 }
-export interface PriceResponse {
+export interface ISwapPriceResponse {
   chainId: number;
   price: string;
   estimatedPriceImpact: string;
@@ -122,7 +122,7 @@ export interface PriceResponse {
   expectedSlippage: string | null;
 }
 
-export interface QuoteResponse {
+export interface ISwapQuoteResponse {
   chainId: number;
   price: string;
   guaranteedPrice: string;
@@ -141,20 +141,20 @@ export interface QuoteResponse {
   sellTokenAddress: string;
   buyAmount: string;
   sellAmount: string;
-  sources: Source[];
-  orders: Order[];
+  sources: SwapSource[];
+  orders: SwapOrder[];
   allowanceTarget: string;
   decodedUniqueId: string;
   sellTokenToEthRate: string;
   buyTokenToEthRate: string;
   expectedSlippage: string | null;
 }
-interface Source {
+interface SwapSource {
   name: string;
   proportion: string;
 }
 
-interface Order {
+interface SwapOrder {
   makerToken: string;
   takerToken: string;
   makerAmount: string;

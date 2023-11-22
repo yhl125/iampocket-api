@@ -53,6 +53,75 @@ type ValhaIneractionData {
   interactionTx: TransactionData!
 }
 
+type BridgeAsset {
+  chainId: Int!
+  address: String!
+  symbol: String!
+  name: String!
+  decimals: Int!
+  icon: String!
+  logoURI: String!
+  chainAgnosticId: String
+}
+
+type BridgeRoute {
+  routeId: String!
+  isOnlySwapRoute: Boolean!
+  fromAmount: String!
+  toAmount: String!
+  usedBridgeNames: [String!]!
+  minimumGasBalances: JSON!
+  chainGasBalances: JSON!
+  totalUserTx: Int!
+  sender: String!
+  recipient: String!
+  totalGasFeesInUsd: Float!
+  receivedValueInUsd: Float!
+  inputValueInUsd: Float!
+  outputValueInUsd: Float!
+  userTxs: [JSON!]!
+  serviceTime: Int!
+  maxServiceTime: Int!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type BridgeQuote {
+  routes: [BridgeRoute!]!
+  fromAsset: BridgeAsset!
+  toAsset: BridgeAsset!
+}
+
+type BridgeApprovalData {
+  data: String!
+  to: String!
+  from: String!
+}
+
+type BridgeBuildTxDataWithApproveData {
+  userTxType: String!
+  txData: String!
+  txTarget: String!
+  chainId: String!
+  value: String!
+  userTxIndex: Int!
+  approvalData: BridgeApprovalData
+  needApproval: Boolean!
+}
+
+type BridgeSupportedToken {
+  name: String
+  address: String!
+  chainId: Int!
+  decimals: Int!
+  symbol: String!
+  logoUri: String!
+  chainAgnosticIc: String!
+}
+
 type Source {
   name: String!
   proportion: String!
@@ -74,7 +143,7 @@ type Order {
   type: Int!
 }
 
-type Quote {
+type SwapQuote {
   chainid: Int!
   price: String!
   guaranteedPrice: String!
@@ -91,7 +160,7 @@ type Quote {
   AllownaceTarget: String!
 }
 
-type Price {
+type SwapPrice {
   chainid: Int!
   price: String!
   value: String!
@@ -107,8 +176,13 @@ type Query {
   findEvmTokenBalance(address: String!, chainIds: [Int!]!, quoteCurrency: QuoteCurrency!): [Token!]!
   findEvmNftBalance(address: String!, chainIds: [Int!]!): [Nft!]!
   valhaZapTransaction(valhaZapInput: ValhaZapInput!): ValhaIneractionData!
-  findSwapQuote(chainId: Int!, sellToken: String!, buyToken: String!, sellAmount: String, buyAmount: String, slippagePercentage: String, takerAddress: String): Quote!
-  findSwapPrice(chainId: Int!, sellToken: String!, buyToken: String!, sellAmount: String, buyAmount: String, takerAddress: String): Price!
+  findBridgeSupportedFromTokens(fromChainId: Int!, toChainId: Int!): [BridgeSupportedToken!]!
+  findBridgeSupportedToTokens(fromChainId: Int!, toChainId: Int): [BridgeSupportedToken!]!
+  findBridgeQuote(fromChainId: Int!, fromTokenAddress: String!, toChainId: Int!, toTokenAddress: String!, fromAmount: String!, userAddress: String!, sort: String!, isContractCall: Boolean!, defaultSwapSlippage: Float!, recipient: String): BridgeQuote!
+  findBridgeRouteTransactionData(route: BridgeRouteInput!): BridgeBuildTxDataWithApproveData!
+  findApprovalTransactionData(approvalDataInput: BridgeBuildTxApprovalDataInput!): BridgeApprovalData!
+  findSwapQuote(chainId: Int!, sellToken: String!, buyToken: String!, sellAmount: String, buyAmount: String, slippagePercentage: String, takerAddress: String): SwapQuote!
+  findSwapPrice(chainId: Int!, sellToken: String!, buyToken: String!, sellAmount: String, buyAmount: String, takerAddress: String): SwapPrice!
 }
 
 enum QuoteCurrency {
@@ -140,4 +214,32 @@ input ValhaZapInput {
   useValhaRouter: Boolean!
   swapProvider: String!
   swapToken: String!
+}
+
+input BridgeRouteInput {
+  routeId: String!
+  isOnlySwapRoute: Boolean!
+  fromAmount: String!
+  toAmount: String!
+  usedBridgeNames: [String!]!
+  minimumGasBalances: JSON!
+  chainGasBalances: JSON!
+  totalUserTx: Int!
+  sender: String!
+  recipient: String!
+  totalGasFeesInUsd: Float!
+  receivedValueInUsd: Float!
+  inputValueInUsd: Float!
+  outputValueInUsd: Float!
+  userTxs: [JSON!]!
+  serviceTime: Int!
+  maxServiceTime: Int!
+}
+
+input BridgeBuildTxApprovalDataInput {
+  chainId: Int!
+  minimumApprovalAmount: String!
+  approvalTokenAddress: String!
+  allowanceTarget: String!
+  owner: String!
 }

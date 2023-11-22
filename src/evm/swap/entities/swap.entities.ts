@@ -1,20 +1,20 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 @ObjectType()
-class Source {
+class SwapSource {
   @Field()
   name: string;
   @Field()
   proportion: string;
 }
 @ObjectType()
-class FillData {
+class SwapFillData {
   @Field(() => [String])
   tokenAddressPath: string[];
   @Field()
   router: string;
 }
 @ObjectType()
-class Order {
+class SwapOrder {
   @Field()
   makerToken: string;
   @Field()
@@ -23,8 +23,8 @@ class Order {
   makerAmount: string;
   @Field()
   takerAmount: string;
-  @Field(() => FillData)
-  fillData: FillData;
+  @Field(() => SwapFillData)
+  fillData: SwapFillData;
   @Field()
   source: string;
   @Field()
@@ -62,10 +62,10 @@ export class SwapQuote {
   sellTokenAddress: string;
   @Field(() => String)
   sellAmount: string;
-  @Field(() => [Source])
-  sources: Source[];
-  @Field(() => [Order])
-  orders: Order[];
+  @Field(() => [SwapSource])
+  sources: SwapSource[];
+  @Field(() => [SwapOrder])
+  orders: SwapOrder[];
   @Field()
   AllownaceTarget: string;
 }
