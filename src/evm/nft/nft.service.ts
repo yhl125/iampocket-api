@@ -21,9 +21,18 @@ export class NftService {
     const url = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_nft/?no-spam=true&key=${this.configService.get<string>(
       'COVALENT_API_KEY',
     )}`;
-
-    const data = (await lastValueFrom(this.httpService.get(url))).data.data;
-    return this.covalentDataToNfts(data, chainId);
+    try {
+      const data = (await lastValueFrom(this.httpService.get(url))).data.data;
+      return this.covalentDataToNfts(data, chainId);
+    } catch (e) {
+      const urlWithUnCachedParam = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_nft/?no-spam=true&with-uncached=true&key=${this.configService.get<string>(
+        'COVALENT_API_KEY',
+      )}`;
+      const data = (
+        await lastValueFrom(this.httpService.get(urlWithUnCachedParam))
+      ).data.data;
+      return this.covalentDataToNfts(data, chainId);
+    }
   }
   async findNftsByChainIds(address: string, chainIds: number[]) {
     const nftList = chainIds.map((chainId) => {
