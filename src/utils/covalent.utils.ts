@@ -8,6 +8,10 @@ export class CovalentUtils {
         return 'eth-mainnet';
       case 5:
         return 'eth-goerli';
+      case 11155111:
+        return 'eth-sepolia';
+      case 17000:
+        return 'eth-holesky';
       case 56:
         return 'bsc-mainnet';
       case 137:
