@@ -3,8 +3,6 @@ export class SwapUtils {
     switch (chainId) {
       case 1:
         return ' https://api.0x.org/';
-      case 5:
-        return 'https://goerli.api.0x.org/';
       case 42161:
         return 'https://arbitrum.api.0x.org/';
       case 43114:
@@ -80,8 +78,6 @@ export class SwapUtils {
     switch (chainId) {
       case 1:
         return '0xdef1c0ded9bec7f1a1670819833240f027b25eff';
-      case 5:
-        return '0xf91bb752490473b8342a3e964e855b9f9a2a668e';
       case 42161:
         return '0xdef1c0ded9bec7f1a1670819833240f027b25eff';
       case 43114:
