@@ -32,7 +32,13 @@ export class Token {
   @Field({ nullable: true })
   quoteRate24hAgo?: number;
 }
-
+@ObjectType()
+export class TokenAssetData {
+  @Field()
+  totalQuote: number;
+  @Field(() => [Token])
+  tokenList: Token[];
+}
 export enum QuoteCurrency {
   USD,
   CAD,
