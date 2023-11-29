@@ -19,6 +19,11 @@ type Token {
   quoteRate24hAgo: Float
 }
 
+type TokenAssetData {
+  totalQuote: Float!
+  tokenList: [Token!]!
+}
+
 type Attribute {
   trait_type: String!
   value: String!
@@ -104,7 +109,7 @@ type Price {
 }
 
 type Query {
-  findEvmTokenBalance(address: String!, chainIds: [Int!]!, quoteCurrency: QuoteCurrency!): [Token!]!
+  findEvmTokenBalance(address: String!, chainIds: [Int!]!, quoteCurrency: QuoteCurrency!): TokenAssetData!
   findEvmNftBalance(address: String!, chainIds: [Int!]!): [Nft!]!
   valhaZapTransaction(valhaZapInput: ValhaZapInput!): ValhaIneractionData!
   findSwapQuote(chainId: Int!, sellToken: String!, buyToken: String!, sellAmount: String, buyAmount: String, slippagePercentage: String, takerAddress: String): Quote!

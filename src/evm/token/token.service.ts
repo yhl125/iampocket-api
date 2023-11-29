@@ -7,7 +7,7 @@ import {
   CovalentTokenItem,
   CovalentUtils,
 } from 'src/utils/covalent.utils';
-import { QuoteCurrency, Token } from './entities/token.entity';
+import { QuoteCurrency, Token, TokenAssetData } from './entities/token.entity';
 
 @Injectable()
 export class BalanceService {
@@ -22,10 +22,12 @@ export class BalanceService {
     quoteCurrency: QuoteCurrency,
   ) {
     if (!address) {
-      return [];
+      return {
+        totalAmount: 0,
+        tokenList: [],
+      };
     }
     const chainName = CovalentUtils.chainNameFrom(chainId);
-
     const url = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_v2/?quote-currency=${
       QuoteCurrency[quoteCurrency]
     }&no-spam=true&key=${this.configService.get<string>('COVALENT_API_KEY')}`;
@@ -37,22 +39,37 @@ export class BalanceService {
     chainIds: number[],
     quoteCurrency: QuoteCurrency,
   ) {
-    const tokenList = chainIds.map((chainId) => {
+    let totalQuote = 0;
+    const tokenList = [];
+    const tokenAsset = chainIds.map((chainId) => {
       return this.findTokens(address, chainId, quoteCurrency);
     });
-    return (await Promise.all(tokenList)).flat();
+    (await Promise.all(tokenAsset)).forEach((value) => {
+      totalQuote += value.totalAmount;
+      tokenList.push(...value.tokenList);
+    });
+    const tokenAssetData: TokenAssetData = {
+      totalQuote: totalQuote,
+      tokenList: tokenList,
+    };
+    return tokenAssetData;
   }
   covalentDataToTokens(data: CovalentBalancesResponse) {
     const tokens: Token[] = [];
-
+    let totalAmount: number = 0;
     for (const item of data.items) {
       if (item.balance === '0') {
         continue;
       } else {
+        totalAmount += item.quote;
         tokens.push(this.covalentItemToToken(item, data.chain_id));
       }
     }
-    return tokens;
+    const tokenAssetData = {
+      totalAmount: totalAmount,
+      tokenList: tokens,
+    };
+    return tokenAssetData;
   }
 
   covalentItemToToken(item: CovalentTokenItem, chainId: number) {
