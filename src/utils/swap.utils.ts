@@ -23,6 +23,8 @@ export class SwapUtils {
         return 'https://polygon.api.0x.org/';
       case 80001:
         return 'https://mumbai.api.0x.org/';
+      case 11155111:
+        return 'https://sepolia.api.0x.org/';
       default:
         throw new Error('Chain ID not Found');
     }
@@ -98,6 +100,8 @@ export class SwapUtils {
         return '0xdef1c0ded9bec7f1a1670819833240f027b25eff';
       case 80001:
         return '0xf471d32cb40837bf24529fcf17418fc1a4807626';
+      case 11155111:
+        return '0xdef1c0ded9bec7f1a1670819833240f027b25eff';
     }
   }
 }
